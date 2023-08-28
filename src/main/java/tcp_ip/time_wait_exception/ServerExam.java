@@ -13,26 +13,31 @@ public class ServerExam {
         int port = 8888;
 
         try {
+            /** 서버측 소켓 생성*/
             ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("서버측 소켓을 생성하였습니다 port : " + port);
 
+            /** 서버와 클라이언트 연결 */
             Socket clientSocket = serverSocket.accept();
             System.out.println("클라이언트와 연결되었습니다.");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-
             String receivedMessage = in.readLine();
             System.out.println("클라이언트로부터 받은 메시지 : " + receivedMessage);
 
+            Thread.sleep(4000); /** 4초간 대기 */
+
+            /** 서버에서 클라이언트로 보내는 데이터 메시지 */
             out.println("서버에서 클라이언트로 보내는 메시지입니다! 우히히");
+
             System.out.println("클라이언트 socket close 5초전");
-            Thread.sleep(5000); /** 5초간 대기 */
-
             clientSocket.close(); /** 서버 -> 클라 : FIN packet 보냄 */
-            System.out.println("클라이언트 socket close");
+            System.out.println("클라이언트 socket close 시작 ");
+            System.out.println("클라이언트 socket close 끝 ");
 
-            Thread.sleep(10000); //10초간 대기 _ time-wait
+            /** client로부터 FIN패킷을 받고나서 time-wait 시작 */
+            Thread.sleep(15000); //15초간 대기 _ time-wait
             serverSocket.close();
             System.out.println("서버 측 종료 완료");
 
