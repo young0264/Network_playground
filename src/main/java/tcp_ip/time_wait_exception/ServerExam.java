@@ -37,7 +37,7 @@ public class ServerExam {
             System.out.println("클라이언트 socket close 끝 ");
 
             /** client로부터 FIN패킷을 받고나서 time-wait 시작 */
-            Thread.sleep(15000); //15초간 대기 _ time-wait
+            Thread.sleep(11000); //11초간 대기 _ time-wait상태는 일반적으로 1-2분정도 유지
             serverSocket.close();
             System.out.println("서버 측 종료 완료");
 
